@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia</title>
+    <link rel = "stylesheet" href = "style.css">
+    <script src = "https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src = "script.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1 class = "game_title">Trivia Game Title</h1>
+    </header>
+
+    <main>
+        <div class = "question_container"></div>
+        <ul class = "answers_container">
+            <li id = "choiceA"> </li>
+            <li id = "choiceB"></li>
+            <li id = "choiceC"></li>
+            <li id = "choiceD"></li>
+        </ul>
+        <output class = "feedback">
+            <p id = "rightOrWrongMsg"></p>
+            <button id = "playAgain"></button>
+        </output>
+    </main>
+
+</body>
+</html>
