@@ -50,7 +50,7 @@ async function startGame() {
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
-    //For each method calls shuffle function for each element (inner array) of the multiple choice answers array.
+    //forEach method calls shuffle function for each element (inner array) of the multiple choice answers array.
     multipleChoiceAnswers.forEach(element => {
         shuffleInnerArray(element)
     });
@@ -66,18 +66,28 @@ async function startGame() {
 
 /*----event listeners----*/
 //Event listener that tells us which answer user clicked.
-document.querySelector(".answers_container").onclick = function(e) {
-    playerAnswer = e.target.id
-    console.log(playerAnswer)
-    console.log(document.querySelector(`#${e.target.id}`).innerText)
+    document.querySelector(".answers_container").onclick = function(e) {
+        playerAnswer = e.target.id
+        console.log(playerAnswer)
+        console.log(document.querySelector(`#${e.target.id}`).innerText)
 
-    if (numAnswered < 10) {
+    
         if (document.querySelector(`#${e.target.id}`).innerText === correctAnswers[numAnswered]) {
             console.log("Correct")
         } else {
-            console.log("Incorrect")
+            console.log(`Incorrect.  The correct answer is ${correctAnswers[numAnswered]}.`)
         }
-        numAnswered++
+    numAnswered++
+    console.log(numAnswered)
+
+    if (numAnswered < 10) {
+        //Load next question button
+        question.innerText = questions[numAnswered]
+        multChoiceA.innerText = multipleChoiceAnswers[numAnswered][0]
+        multChoiceB.innerText = multipleChoiceAnswers[numAnswered][1]
+        multChoiceC.innerText = multipleChoiceAnswers[numAnswered][2]
+        multChoiceD.innerText = multipleChoiceAnswers[numAnswered][3]
+
     } else {
         //Play again? button.  Start over or stop game.
     }
