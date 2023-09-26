@@ -14,19 +14,23 @@
         <h1 class = "game_title">Trivia Game Title</h1>
     </header>
 
-    <main>
-        <div class = "question_container"></div>
-        <ul class = "answers_container">
-            <li id = "choiceA"> </li>
-            <li id = "choiceB"></li>
-            <li id = "choiceC"></li>
-            <li id = "choiceD"></li>
+    
+        <div id = "qanda">
+            <div class = "question_container"></div>
+            <ul class = "answers_container">
+                <li id = "choiceA"> </li>
+                <li id = "choiceB"></li>
+                <li id = "choiceC"></li>
+                <li id = "choiceD"></li>
         </ul>
-        <output class = "feedback">
+        <p id = "progress"></p>
+        </div>
+        <div class = "modal">
             <p id = "rightOrWrongMsg"></p>
-            <button id = "playAgain"></button>
-        </output>
-    </main>
+            <button id = "nextQuestion">Next Question</button>
+            <button id = "playAgain">Play again</button>
+        </div>
+    
 
 </body>
 </html>
