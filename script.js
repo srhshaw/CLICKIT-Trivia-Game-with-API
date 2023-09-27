@@ -4,6 +4,7 @@ startGame();
 
 /*----variables----*/
 const question = document.querySelector(".question_container")
+const answers = document.querySelector(".answers_container")
 const multChoiceA = document.querySelector("#choiceA")
 const multChoiceB = document.querySelector("#choiceB")
 const multChoiceC = document.querySelector("#choiceC")
@@ -15,11 +16,17 @@ const fadeElements = document.querySelector("#qanda")
 let response = []
 let questions = []
 let correctAnswers = []
-let multipleChoiceAnswers = []
+let multipleChoiceAnswers = [] 
 
 let numAnswered = 0
 let feedbackMsg = ""
-//document.getElementById("playAgain").style.visibility = "hidden"
+
+
+//Function to decode the html codes returned in string value results from API.
+function decodeIt(str) {
+    let doc = new DOMParser().parseFromString(str, "text/html");
+    return doc.documentElement.textContent;
+}
 
 /*----API Call----*/
 
@@ -64,24 +71,22 @@ async function startGame() {
 
     fadeElements.style.opacity = "1";
     document.getElementById("playAgain").style.visibility = "hidden";
-    //document.querySelector(".modal").style.z-index = 1;
 
-    question.innerText = questions[0]
-    multChoiceA.innerText = multipleChoiceAnswers[0][0]
-    multChoiceB.innerText = multipleChoiceAnswers[0][1]
-    multChoiceC.innerText = multipleChoiceAnswers[0][2]
-    multChoiceD.innerText = multipleChoiceAnswers[0][3]
+    question.innerText = decodeIt(questions[0])
+    multChoiceA.innerText = decodeIt(multipleChoiceAnswers[0][0])
+    multChoiceB.innerText = decodeIt(multipleChoiceAnswers[0][1])
+    multChoiceC.innerText = decodeIt(multipleChoiceAnswers[0][2])
+    multChoiceD.innerText = decodeIt(multipleChoiceAnswers[0][3])
 
     feedbackMsg = ""
     answerFeedback.innerText = feedbackMsg;
 
     numAnswered = 0
     questionCount.innerText = `${numAnswered+1} of 10`
-
-    //document.getElementById("playAgain").style.visibility = "hidden";
 }
 
 /*----event listeners----*/
+
 //Event listener that tells us which answer user clicked.
     document.querySelector(".answers_container").onclick = function(e) {
         playerAnswer = e.target.id
@@ -94,38 +99,41 @@ async function startGame() {
             feedbackMsg = "Correct!"
             console.log("Correct")
         } else {
-            feedbackMsg = `Incorrect.  The correct answer is ${correctAnswers[numAnswered]}`
-            console.log(`Incorrect.  The correct answer is ${correctAnswers[numAnswered]}.`)
+            feedbackMsg = `Incorrect.  The correct answer is ${decodeIt(correctAnswers[numAnswered])}`
+            console.log(`Incorrect.  The correct answer is ${decodeIt(correctAnswers[numAnswered])}.`)
         }
     numAnswered++
     console.log(numAnswered)
     answerFeedback.innerText = feedbackMsg;
 
-
-
     if (numAnswered < 10) {
-        //Load next question button
-        //document.getElementsByTagName("body").style.opacity = ".2";
+        //Fade Q&A containers into background.
         fadeElements.style.opacity = ".2";
-
+        //Display modal.
         document.querySelector(".modal").style.display = "block";
+        answers.classList.add("disabled")
 
-        //document.getElementById("nextQuestion").style.visibility = "visible";
-
-
+        //Load next question button with event listener
         document.querySelector("#nextQuestion").onclick = loadQuestion;
+        
+
+        //Remove event listener from answers container while modal is displayed.
+        //document.querySelector(".answers_container").removeEventListener("click", function);
 
         function loadQuestion() {
         feedbackMsg=""
         answerFeedback.innerText = feedbackMsg;
         fadeElements.style.opacity = "1";
-        question.innerText = questions[numAnswered]
-        multChoiceA.innerText = multipleChoiceAnswers[numAnswered][0]
-        multChoiceB.innerText = multipleChoiceAnswers[numAnswered][1]
-        multChoiceC.innerText = multipleChoiceAnswers[numAnswered][2]
-        multChoiceD.innerText = multipleChoiceAnswers[numAnswered][3]
+    
+        question.innerText = decodeIt(questions[numAnswered])
+        multChoiceA.innerText = decodeIt(multipleChoiceAnswers[numAnswered][0])
+        multChoiceB.innerText = decodeIt(multipleChoiceAnswers[numAnswered][1])
+        multChoiceC.innerText = decodeIt(multipleChoiceAnswers[numAnswered][2])
+        multChoiceD.innerText = decodeIt(multipleChoiceAnswers[numAnswered][3])
         questionCount.innerText = `${numAnswered+1} of 10`
+
         document.querySelector(".modal").style.visibility = "hidden";
+        answers.classList.remove("disabled")
         }
 
     } else {
