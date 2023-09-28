@@ -1,6 +1,6 @@
 /* main styling */
 body {
-    background-color: midnightblue;
+    background-color: #082C49;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -22,6 +22,7 @@ h1{
 
 .question_container{
     display: flex;
+    margin: auto;
     flex-direction: column;
     border: solid cornflowerblue;
     border-width: 5px;
@@ -32,19 +33,24 @@ h1{
     align-items: center;
     color: cornflowerblue
 }
-
-/* .answers_container{
+/* QUESTION- THIS SEEMS LIKE A GOOD CANDIDATE FOR FLEX-BOX...WHY DOESN'T IT WORK AS ONE WOULD EXPECT? .answers_container only formats the outer border & li inner text font.*/
+ /* .answers_container{
     display: flex;
     flex-direction: column;
     border: solid cornflowerblue;
     border-width: 5px;
+    margin-bottom: 25px;
     margin: auto;
     width: 500px; 
     height: 400px;
     justify-content: center;
     align-items: center;
-} */
+    border-collapse: collapse;
+    color: cornflowerblue;
+}  */
 
+
+/* QUESTION- WHY DON'T BORDERS COLLAPSE? */
 li {
     display: flex;
     flex-direction: column;
@@ -72,14 +78,16 @@ ul {
 }
 .modal{
     position: absolute; 
-    top: 40%;
-    background-color: midnightblue;
-    width: 30%;
+    top: 35%;
+    background-color: #082C49;
+    width: 35%;
     color: coral;
     text-align: center;
     z-index: 2;
     display: none;
     margin: 0 auto;
+    border-style: dashed;
+    border-color: cornflowerblue;
 }
 #playAgain{
     display: none;

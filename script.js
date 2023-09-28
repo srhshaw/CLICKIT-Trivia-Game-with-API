@@ -1,7 +1,3 @@
-
-//Function call to make API call and begin game.
-startGame();
-
 /*----variables----*/
 const question = document.querySelector(".question_container")
 const answers = document.querySelector(".answers_container")
@@ -12,6 +8,7 @@ const multChoiceD = document.querySelector("#choiceD")
 const answerFeedback = document.querySelector("#rightOrWrongMsg")
 const questionCount = document.querySelector("#progress")
 const fadeElements = document.querySelector("#qanda")
+const finalScore = document.querySelector("#score")
 
 let response = []
 let questions = []
@@ -19,7 +16,12 @@ let correctAnswers = []
 let multipleChoiceAnswers = [] 
 
 let numAnswered = 0
+let numCorrectAnswers = 0
 let feedbackMsg = ""
+let token = ""
+
+//Function call to make API call and begin game.
+startGame();
 
 
 //Function to decode the html codes returned in string value results from API.
@@ -31,7 +33,10 @@ function decodeIt(str) {
 /*----API Call----*/
 
 async function startGame() {
-    let response = await axios.get(`https://opentdb.com/api.php?amount=10&type=multiple`);
+    if (token == "") {
+        token = await axios.get(`https://opentdb.com/api_token.php?command=request`)
+    }
+    let response = await axios.get(`https://opentdb.com/api.php?amount=10&type=multiple&token=${token.data.token}`)
     let results = response.data.results
     console.log(results)
 
@@ -70,19 +75,36 @@ async function startGame() {
     console.log(`Shuffled multiple choice answers: ${multipleChoiceAnswers}`)
 
     fadeElements.style.opacity = "1";
-    document.getElementById("playAgain").style.visibility = "hidden";
+
+    //QUESTION- Why isn't button included when modal is set to hidden?
+    //document.getElementById("playAgain").style.visibility = "hidden";
+    //document.querySelector(".modal").style.visibility = "hidden";
+    document.querySelector(".modal").style.display = "none";
 
     question.innerText = decodeIt(questions[0])
     multChoiceA.innerText = decodeIt(multipleChoiceAnswers[0][0])
     multChoiceB.innerText = decodeIt(multipleChoiceAnswers[0][1])
     multChoiceC.innerText = decodeIt(multipleChoiceAnswers[0][2])
-    multChoiceD.innerText = decodeIt(multipleChoiceAnswers[0][3])
+    multChoiceD.innerText = decodeIt(multipleChoiceAnswers[0][3])   
 
     feedbackMsg = ""
     answerFeedback.innerText = feedbackMsg;
 
+    finalScore.innerText = "" 
+
     numAnswered = 0
     questionCount.innerText = `${numAnswered+1} of 10`
+}
+
+function playAgain(){
+    questions = []
+    correctAnswers = []
+    multipleChoiceAnswers = []
+    numAnswered = 0
+    numCorrectAnswers = 0
+    answers.classList.remove("disabled")
+
+    startGame()
 }
 
 /*----event listeners----*/
@@ -96,6 +118,7 @@ async function startGame() {
         document.querySelector(".modal").style.visibility = "visible"
         
         if (document.querySelector(`#${e.target.id}`).innerText === correctAnswers[numAnswered]) {
+            numCorrectAnswers++
             feedbackMsg = "Correct!"
             console.log("Correct")
         } else {
@@ -104,6 +127,7 @@ async function startGame() {
         }
     numAnswered++
     console.log(numAnswered)
+    console.log(numCorrectAnswers)
     answerFeedback.innerText = feedbackMsg;
 
     if (numAnswered < 10) {
@@ -115,14 +139,11 @@ async function startGame() {
 
         //Load next question button with event listener
         document.querySelector("#nextQuestion").onclick = loadQuestion;
-        
-
-        //Remove event listener from answers container while modal is displayed.
-        //document.querySelector(".answers_container").removeEventListener("click", function);
 
         function loadQuestion() {
         feedbackMsg=""
         answerFeedback.innerText = feedbackMsg;
+
         fadeElements.style.opacity = "1";
     
         question.innerText = decodeIt(questions[numAnswered])
@@ -132,8 +153,9 @@ async function startGame() {
         multChoiceD.innerText = decodeIt(multipleChoiceAnswers[numAnswered][3])
         questionCount.innerText = `${numAnswered+1} of 10`
 
-        document.querySelector(".modal").style.visibility = "hidden";
         answers.classList.remove("disabled")
+        document.querySelector(".modal").style.visibility = "hidden";
+        
         }
 
     } else {
@@ -141,8 +163,17 @@ async function startGame() {
         questionCount.innerText = `${numAnswered} of 10`
         fadeElements.style.opacity = ".2"; 
         document.getElementById("nextQuestion").style.display = "none";
+
+        if (numCorrectAnswers>5){
+            finalScore.innerText = `Congrats! You got ${numCorrectAnswers} of 10 correct!`
+        } else {
+            finalScore.innerText = `You got ${numCorrectAnswers} of 10 correct.  Try again?`
+        }
+
         document.getElementById("playAgain").style.display = "block"
         document.getElementById("playAgain").style.visibility = "visible"
-        document.querySelector("#playAgain").onclick = startGame;
+        answers.classList.add("disabled")
+
+        document.querySelector("#playAgain").onclick = playAgain;
     }
 }
