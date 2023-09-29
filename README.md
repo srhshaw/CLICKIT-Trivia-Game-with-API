@@ -1,17 +1,20 @@
-# Project-1-Trivia-API
+<h1>CLICKIT Trivia Game</h1> 
 
-For this project I will build a trivia game that uses Axios calls to the Open Trivia Database API as the source of its question and answer material. 
+<h2>Overview</h2>
+CLICKIT is an interactive trivia game built with responsive, web-based design.  A game set is comprised of 10 questions.  The player will select an answer to each question from among four choices.  The game will track the number of correct responses out of 10 to reveal the player's final score at the end of the set.     
 
-The Test.JSON file contains a data object response from an API call to the Open Trivia Database API placed through ThunderClient.  The file demonstrates the data structure.  The trivia questions and multiple choice answers from this data will but used to populate the game. 
+<h2>Surge Deployment Link</h2>
+<a href="https://srhs-clickit.surge.sh/">CLICKIT</a>
 
-The Pseudocode.md file lays out the basic steps of the game flow and indicates the points in which API calls, DOM manipulation, and logic algorithm(s) must be constructed within the code.
+<h2>Features and Functionality</h2>
 
-The Trivia Wireframe 2.drawio.png file shows a mockup of the design layout that will be used as a guide in styling with CSS.  The design will be simple, engaging, and intuitive requiring no learning curve to use and easy play & mobility.
+-  **API Content Sourcing:**  The game retrieves and decodes trivia questions from a wide variety of subjects and levels of difficulty and their possible answers from the Open Trivia Database API.
+-  **Material Made Challenging & Compelling:**  A game is comprised of 10 non-repeating questions with shuffled, multiple choice answers.
+-  **Intuitive:**  The user selects an answer with the click of the mouse.
+-  **Feedback:**  Response confirming a correct or incorrect choice with the correct answer is posted after each answer submission.  A "next question" button prompt ensures progression at the user's pace.
+-  **Ease of Use:**  Deliberate element visibility keeps game play on track.
+-  **Score Display:**  The player's number of correct answer selections per 10-question set is recorded and the score presented to them at the game's conclusion along with a button option to play again.
+-  **Mobility:**  Clean, modern styling and responsive design allows for easy play on the go.
 
-The html file will be attached to a JS Script file, the Axios library, and a CSS file for styling the user interface on the screen.  There will be an h1 title and 5 empty elements that will be populated with question and multiple choice answers response data. There will be text elements to display correct or incorrect answer messages and a button element for the 'Next Question?' game continuation prompt.  
-
-The JavaScript file will house DOM elements for manipulating the questions, interactive answers, response messages, and play continuation button.  It will contain answer choice mapping and correct/incorrect answer logic as well as the game flow and functionality.
-
-The CSS file will be styled clean and modern with a minimum of distraction both in design and color.  The styling will incorporate flexible design to make the game appealing and easy-to-use for mobile players.  
-
-Challenges will include making the API calls and populating the response data to the html accurately, legibly, and in the desired format; mapping the user choice responses and correct answer match logic; and conditional messages and input request.  
+<h2>Wireframe</h2>
+<a href="https://github.com/srhshaw/Project-1-Trivia-API/blob/main/Trivia%20Wireframe%202.drawio.png">Drawio Wireframe</a>
