@@ -124,7 +124,7 @@ function playAgain(){
     //POPULATE ANSWER FEEDBACK MESSAGE.
     answerFeedback.innerText = feedbackMsg;
 
-    //CONDTIONAL TO DECIDE IF NEXT QUESTION OR END OF GAME/PLAY AGAIN.
+    //CONDITIONAL TO DECIDE IF NEXT QUESTION OR END OF GAME/PLAY AGAIN.
     if (numAnswered < 10) {
         //FADE Q&A CONTAINERS INTO BACKGROUND.
         fadeElements.style.opacity = ".2";

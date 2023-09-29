@@ -67,8 +67,8 @@ ul {
     position: absolute; 
     top: 35%;
     background-color: #082C49;
-    width: 35%;
-    height: 10%;
+    width: 400px;
+    height: 125px;
     color: #F39C12;
     text-align: center;
     z-index: 2;
@@ -137,7 +137,7 @@ ul {
         font-size: medium;
     }
     .modal{
-        top: 20%;
+        top: 25%;
         width: 60%;
         border-width: 5px;
         font-size: 15px;
