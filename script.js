@@ -1,4 +1,4 @@
-/*----variables----*/
+//VARIABLES.
 const question = document.querySelector(".question_container")
 const answers = document.querySelector(".answers_container")
 const multChoiceA = document.querySelector("#choiceA")
@@ -20,18 +20,16 @@ let numCorrectAnswers = 0
 let feedbackMsg = ""
 let token = ""
 
-//Function call to make API call and begin game.
+//FUNCTION CALL TO BEGIN GAME.
 startGame();
 
-
-//Function to decode the html codes returned in string value results from API.
+//FUNCTION TO DECODE THE HTML CODES RETURNED IN STRING VALUE RESULTS FROM API.
 function decodeIt(str) {
     let doc = new DOMParser().parseFromString(str, "text/html");
     return doc.documentElement.textContent;
 }
 
-/*----API Call----*/
-
+//ASYNC FUNCTION FOR API CALL.
 async function startGame() {
     if (token == "") {
         token = await axios.get(`https://opentdb.com/api_token.php?command=request`)
@@ -40,47 +38,45 @@ async function startGame() {
     let results = response.data.results
     console.log(results)
 
-    //Loop over API call results to push the questions, correct answers, & wrong answers into the empty arrays created to house them.
+    //LOOP OVER API CALL RESULTS TO PUSH THE QUESTIONS, CORRECT ANSWERS, & WRONG ANSWERS INTO THE EMPTY ARRAYS CREATED TO HOUSE THEM. 
     for (let i=0; i<results.length; i++) {
         questions.push(results[i].question)
         correctAnswers.push(results[i].correct_answer)
         multipleChoiceAnswers.push(results[i].incorrect_answers)
     
         console.log(`Question ${i+1}: ${questions[i]}`)
-        console.log(`Correct answer ${i+1}: ${correctAnswers[i]}`)
-        console.log(`Wrong answer ${i+1}: ${multipleChoiceAnswers[i]}`)
     }
 
-    //Loop over wrong answer array and push the correct answer at the corresponding index into the wrong answers array so that all of the multiple choice answers are in one 2D array.    
+    //LOOP OVER WRONG ANSWER ARRAY AND PUSH THE CORRECT ANSWER AT THE CORRESPONDING INDEX INTO THE WRONG ANSWERS ARRAY SO THAT ALL OF THE MULTIPLE CHOICE ANSWERS ARE IN ONE 2D ARRAY.    
     for (let i=0; i<multipleChoiceAnswers.length; i++) {
         multipleChoiceAnswers[i].push(correctAnswers[i])
     }
 
     console.log(`All answers: ${multipleChoiceAnswers}`)
 
-    //Function for Fisher-Yates Sorting Algorithm to shuffle contents of multiple choice answer arrays.
+    //FUNCTION USING FISHER-YATES SORTING ALGORITHM TO SHUFFLE CONTENTS OF MULTIPLE CHOICE ANSWER ARRRAYS.  
     function shuffleInnerArray(array) {
         for (let i=array.length-1; i>0; i--) {
-            //Generate random number to use as a random index from 0 to i inclusive
+            //GENERATE RANDOM NUMBER TO USE AS A RANDOM INDEX FROM 0 TO 1 INSLUSIVE. 
             const j = Math.floor(Math.random() * (i+1));
-            //Swap array[i] with random element
+            //SWAY ARRAY[i] WITH RANDOM ELEMENT.  
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
-    //forEach method calls shuffle function for each element (inner array) of the multiple choice answers array.
+    //FOREACH METHOD CALLS SHUFFLE FUNCTION FOR EACH ELEMENT (INNER ARRAY) OF THE MULTIPLE CHOICE ANSWERS ARRAY.   
     multipleChoiceAnswers.forEach(element => {
         shuffleInnerArray(element)
     });
 
     console.log(`Shuffled multiple choice answers: ${multipleChoiceAnswers}`)
 
+    //Q&A ELEMENTS MADE VISIBLE TO USER.
     fadeElements.style.opacity = "1";
 
-    //QUESTION- Why isn't button included when modal is set to hidden?
-    //document.getElementById("playAgain").style.visibility = "hidden";
-    //document.querySelector(".modal").style.visibility = "hidden";
+    //MODAL NOT DISPLAYED.
     document.querySelector(".modal").style.display = "none";
 
+    //POPULATE DECODED QUESTION & ANSWERS AT CORRESPONDING INDEXES.
     question.innerText = decodeIt(questions[0])
     multChoiceA.innerText = decodeIt(multipleChoiceAnswers[0][0])
     multChoiceB.innerText = decodeIt(multipleChoiceAnswers[0][1])
@@ -96,6 +92,7 @@ async function startGame() {
     questionCount.innerText = `${numAnswered+1} of 10`
 }
 
+//FUNCTION TO RESET VARIABLES AND BEGIN GAME AGAIN.
 function playAgain(){
     questions = []
     correctAnswers = []
@@ -107,42 +104,52 @@ function playAgain(){
     startGame()
 }
 
-/*----event listeners----*/
-
-//Event listener that tells us which answer user clicked.
+//EVENT LISTENER TO TELL US WHICH ANSWER USER CLICKED.   
     document.querySelector(".answers_container").onclick = function(e) {
         playerAnswer = e.target.id
-        console.log(playerAnswer)
-        console.log(document.querySelector(`#${e.target.id}`).innerText)
-
+        
+        //SET MODAL VISIBILITY SO IT SHOWS.
         document.querySelector(".modal").style.visibility = "visible"
         
-        if (document.querySelector(`#${e.target.id}`).innerText === correctAnswers[numAnswered]) {
+        //CONDITIONAL TO EVALUATE USER'S ANSWER CHOICE FOR CORRECT/INCORRECT
+        if (document.querySelector(`#${e.target.id}`).innerText === decodeIt(correctAnswers[numAnswered])) {
             numCorrectAnswers++
             feedbackMsg = "Correct!"
-            console.log("Correct")
         } else {
             feedbackMsg = `Incorrect.  The correct answer is ${decodeIt(correctAnswers[numAnswered])}`
-            console.log(`Incorrect.  The correct answer is ${decodeIt(correctAnswers[numAnswered])}.`)
         }
+
+    //INCREMENT NUM ANSWERED.
     numAnswered++
-    console.log(numAnswered)
-    console.log(numCorrectAnswers)
+    //POPULATE ANSWER FEEDBACK MESSAGE.
     answerFeedback.innerText = feedbackMsg;
 
+    //CONDTIONAL TO DECIDE IF NEXT QUESTION OR END OF GAME/PLAY AGAIN.
     if (numAnswered < 10) {
-        //Fade Q&A containers into background.
+        //FADE Q&A CONTAINERS INTO BACKGROUND.
         fadeElements.style.opacity = ".2";
-        //Display modal.
-        document.querySelector(".modal").style.display = "block";
+        
+        //DISPLAY MODAL.
+        document.querySelector(".modal").style.display = "flex";
+
+        //TURN OFF POINTER EVENTS (CLICK EVENT LISTENER) TO ANSWERS CONTAINER WHILE MODAL IS DISPLAYED.
         answers.classList.add("disabled")
 
-        //Load next question button with event listener
-        document.querySelector("#nextQuestion").onclick = loadQuestion;
+        //TURN OFF PLAY AGAIN BUTTON DISPLAY.
+        document.getElementById("playAgain").style.display = "none";
 
+        //DISPLAY NEXT QUESTION BUTTON.
+        document.getElementById("nextQuestion").style.display = "block"
+        document.getElementById("nextQuestion").style.visibility = "visible"
+
+        //LOAD 'NEXT QUESTION' BUTTON WITH EVENT LISTENER.
+        document.querySelector("#nextQuestion").onclick = loadQuestion;
+        
+        //FUNCTION TO LOAD QUESTION AND HIDE MODAL TEXT & BUTTONS.
         function loadQuestion() {
         feedbackMsg=""
         answerFeedback.innerText = feedbackMsg;
+        document.getElementById("nextQuestion").style.display = "none";
 
         fadeElements.style.opacity = "1";
     
@@ -154,26 +161,28 @@ function playAgain(){
         questionCount.innerText = `${numAnswered+1} of 10`
 
         answers.classList.remove("disabled")
-        document.querySelector(".modal").style.visibility = "hidden";
-        
+        document.querySelector(".modal").style.visibility = "hidden"; 
         }
 
     } else {
-        //Load Play again? button. 
+        //FADE Q&A CONTAINERS INTO BACKGROUND AND HIDE NEXT QUESTION BUTTON. 
         questionCount.innerText = `${numAnswered} of 10`
         fadeElements.style.opacity = ".2"; 
         document.getElementById("nextQuestion").style.display = "none";
 
+        //CONDITIONAL TO DETERMINE RESULTS MESSAGE.
         if (numCorrectAnswers>5){
             finalScore.innerText = `Congrats! You got ${numCorrectAnswers} of 10 correct!`
         } else {
             finalScore.innerText = `You got ${numCorrectAnswers} of 10 correct.  Try again?`
         }
 
+        //LOAD PLAY AGAIN BUTTON.
         document.getElementById("playAgain").style.display = "block"
         document.getElementById("playAgain").style.visibility = "visible"
         answers.classList.add("disabled")
 
+        //CLICK EVENT LISTENER ON PLAY AGAIN BUTTON.
         document.querySelector("#playAgain").onclick = playAgain;
     }
 }

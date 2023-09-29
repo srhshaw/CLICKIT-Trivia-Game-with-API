@@ -1,4 +1,3 @@
-/* main styling */
 body {
     background-color: #082C49;
     margin: auto;
@@ -10,69 +9,57 @@ body {
 
 h1{
     text-align: center;
-    font-size: 50px;
-    color: cornflowerblue;
+    font-size: 30px;
+    font-family: 'Train One', cursive;
+}
+
+span{
+    font-size: 80px;
 }
 
 #qanda{
     opacity: 1;
 }
-/*flex styling*/
-
 
 .question_container{
     display: flex;
     margin: auto;
     flex-direction: column;
-    border: solid cornflowerblue;
+    border: solid #5DADE2;
     border-width: 5px;
+    margin-top: 10px;
     margin-bottom: 50px;
     width: 500px;
     height: 150px;
     justify-content: center;
     align-items: center;
-    color: cornflowerblue
+    color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
+    font-size: large;  
+    text-align: center;
 }
-/* QUESTION- THIS SEEMS LIKE A GOOD CANDIDATE FOR FLEX-BOX...WHY DOESN'T IT WORK AS ONE WOULD EXPECT? .answers_container only formats the outer border & li inner text font.*/
- /* .answers_container{
-    display: flex;
-    flex-direction: column;
-    border: solid cornflowerblue;
-    border-width: 5px;
-    margin-bottom: 25px;
-    margin: auto;
-    width: 500px; 
-    height: 400px;
-    justify-content: center;
-    align-items: center;
-    border-collapse: collapse;
-    color: cornflowerblue;
-}  */
 
-
-/* QUESTION- WHY DON'T BORDERS COLLAPSE? */
 li {
     display: flex;
     flex-direction: column;
-    border: solid cornflowerblue;
-    border-collapse: collapse;
+    border: solid #5DADE2;
     border-width: 5px;
     height: 100px;
     width: 500px;
     margin: auto;
     justify-content: center;
     align-items: center;
-    color: cornflowerblue
+    color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
+    font-size: large;
+    text-align: center;
 }
-/* #nextQuestion {
-    margin: auto;
-    visibility: hidden;
-}*/
+
 ul {
     padding: 0;
 }
 #progress {
-    color: cornflowerblue;
+    color: c#5DADE2;
     margin: 0 auto;
     text-align: center;
 }
@@ -81,18 +68,92 @@ ul {
     top: 35%;
     background-color: #082C49;
     width: 35%;
-    color: coral;
+    height: 10%;
+    color: #F39C12;
     text-align: center;
     z-index: 2;
     display: none;
-    margin: 0 auto;
-    border-style: dashed;
-    border-color: cornflowerblue;
-}
+    margin: auto;
+    border-style: double;
+    border-color: #5DADE2;
+    border-width: 10px;
+    border-radius: 2%;
+    font-family: 'Raleway', sans-serif;
+    font-size: large;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+}  
 #playAgain{
     display: none;
     margin: 0 auto;
+    color: #082C49;
+    height: 25%;
+    width: 35%;
+    margin-top: 10px;
+}
+#nextQuestion{
+    display: none;
+    margin: 0 auto;
+    color: #082C49;
+    height: 25%;
+    width: 35%;
+    margin-top: 10px;
 }
 .disabled{
     pointer-events: none;
+}
+#progress{
+    color: #5DADE2;
+    font-family: 'Raleway', sans-serif;
+    font-size: large;
+}
+#score, #rightOrWrongMsg {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+@media screen and (max-width: 800px) {
+    span{
+        font-size: 50px;
+    }
+    #qanda{
+        border-width: 3px;
+        width: 90%;
+        height: 100px;
+        margin-bottom: 30px;
+        font-size: medium;   
+    }
+    .question_container{
+        border-width: 3px;
+        width: 90%;
+        height: 100px;
+        margin-bottom: 30px;
+        font-size: medium;   
+    }
+    li {
+        border-width: 3px;
+        height: 75px;
+        width: 90%;
+        font-size: medium;
+    }
+    .modal{
+        top: 20%;
+        width: 60%;
+        border-width: 5px;
+        font-size: 15px;
+    }  
+    #nextQuestion{
+        height: 25%;
+        width: 50%;
+        font-size: small;
+        margin-top: 5px;
+        margin-bottom: 3px;
+    }
+    #playAgain{
+        height: 25%;
+        width: 50%;
+        font-size: small;
+        margin-top: 5px;
+        margin-bottom: 3px;
+    }
 }
