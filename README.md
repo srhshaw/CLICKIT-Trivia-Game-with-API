@@ -1,5 +1,7 @@
 <h1>CLICKIT Trivia Game</h1> 
 
+<img src= "./Screenshot.png"></img>
+
 <h2>Overview</h2>
 CLICKIT is an interactive trivia game built with responsive, web-based design.  A game set is comprised of 10 questions.  The player will select an answer to each question from among four choices.  The game will track the number of correct responses out of 10 to reveal the player's final score at the end of the set.     
 
